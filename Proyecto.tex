@@ -1,0 +1,327 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{graphicx}
+\usepackage{pgf,tikz,pgfplots}
+\usepackage{float}
+\usepackage{array,tabularx}
+
+\pgfplotsset{compat=1.15}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows,babel}
+
+\begin{document}
+
+\begin{titlepage}
+
+\vspace{1.5cm}
+\author{Mariana Isabel Fuentes Quintero}
+\bf\title{Ecuaciones Diferenciales}
+\date{29 de agosto 2022}
+\maketitle
+\thispagestyle{empty}
+\vspace{1cm}
+
+
+\vspace{1.3cm}
+
+
+\centering\fontsize{14}{0}{\selectfont{Transformada de Laplace}\\
+{Traslación en el Eje t, Funciones Periódicas}
+}
+
+\vspace{2.5cm}
+\centering\fontsize{14}{0}{\selectfont{Profesor}\\
+{Jhonatan Collazos Ramirez}}
+
+
+\vspace{5cm}
+
+\centering\fontsize{15}{0}{\selectfont{Programa de Ingeniería Civil}}\\
+\centering\fontsize{18}{0}{\selectfont{Universidad del Cauca}}
+
+\end{titlepage}
+
+\newpage
+
+\section{INTRODUCCIÓN}
+Este documento se da a conocer como un proyecto de la materia de Ecuaciones Diferenciales de la Universidad del Cauca, haciendo uso de diferentes aplicaciones tecnológicas como LaTeX, MatLab, YouTube, ademas de algunas referencias de libros para poder realizarse.
+
+Las ecuaciones diferenciales ayudan a describir procesos, modelar y resolver problemas en una gran cantidad de fenómenos y en muchos campos, claramente en el presente ensayo se explicará algunos de los métodos que tiene las ecuaciones diferenciales para resolver problemas con valores iniciales y obtener soluciones explicitas, específicamente se explicara acerca de la \textbf{Transformada de laplace} especialmente en dos herramientas, y como está ayuda a la hora de realizar algunos ejercicios y que estos tengan mayor facilidad de entenderse y resolverse.
+
+\vspace{0.3cm}
+\section{OBJETIVOS}
+\begin{enumerate}
+\item Conocer las diferentes ecuaciones de los temas presentes y aplicarlas adecuadamente
+
+\item Identificar y aprender los distintos resultados al momento de realizar una transformada de Laplace
+
+\item Comprobar que los resultados obtenidos en el presente ensayo sean acordes a los programados en el sistema Matlab
+
+\item Obtener destreza al momento de escribir en comandos para tener mayor entendimiento al momento de explicar un tema o ejercicio.
+
+\end{enumerate}
+
+\vspace{0.3cm}
+\section{FUNDAMENTO TEÓRICO}
+En cálculo elemental se aprendió que la derivación y la integración son transformadas; esto significa, a grandes rasgos, que estas operaciones transforman una función en otra. Por ejemplo, la función $f(x)= x^{2}$ se transforma, a su vez, en una función lineal y en una familia de funciones polinomiales cúbicas con las operaciones de derivación e integración:\\
+
+$f'(x^{2}) = 2x$   \hspace{0.4cm} y \hspace{0.4cm}   $  \displaystyle\int x^{2} \cdot dx = \dfrac{1}{3}x^{3}+c $
+
+Además, estas dos transformadas tienen la propiedad de linealidad tal que la transformada de una combinación lineal de funciones es una combinación lineal de las transformadas. En esta sección se examina un tipo especial de transformada integral llamada transformada de Laplace. Además de tener la propiedad de linealidad, la transformada de Laplace tiene muchas otras propiedades interesantes que la hacen muy útil para resolver problemas lineales con valores iniciales
+
+\vspace{0.2cm}
+\subsection{Transformada de Laplace}
+
+sea \textit{f} una función definida para $ t \geq 0 $. Entonces se dice que la integral \\
+\begin{equation}
+\mathcal{L} {{f(t)}} =  \displaystyle\int_0^{\infty} \epsilon^{-st}f(t) \mathrm{d}t
+\end{equation}
+
+\vspace{0.2cm}
+es la \textbf{transformada de Laplace} de \textit{f}, siempre que la integral converja.\\
+A continuación algunas transformadas de funciones básicas, su rango de convergencia o existencia, obteniendo resultados de manera directa.
+
+\vspace{0.2cm}
+\begin{table}[h]
+\centering
+\scalebox{1.1}{\begin{tabular}{|c|c|}
+\hline
+$ \mathcal{L}\{1\}$ & $\dfrac{1}{s} $ \\
+\hline
+$ \mathcal{L}\{t^{n}\}$ & $\dfrac{n!}{s^{n+1}}, n = 1,2,3...$\\
+\hline
+$\mathcal{L}\{e^{at}\}$ & $\dfrac{1}{s-a}$ \\
+\hline
+$\mathcal{L}\{\sin (kt)\}$ & $\dfrac{k}{s^{2}+k^{2}}$ \\
+\hline
+$\mathcal{L}\{\cos (kt)\}$ & $\dfrac{s}{s^{2}+k^{2}}$ \\
+\hline
+$\mathcal{L}\{\sinh (kt)\}$ & $\dfrac{k}{s^{2}-k^{2}}$ \\
+\hline
+$\mathcal{L}\{\cos (kt)\}$ & $\dfrac{s}{s^{2}+k^{2}}$\\
+\hline
+\end{tabular}}
+\caption{Transformada de algunas funciones básicas}
+\end{table}
+
+\subsection{ Traslación en el eje t} \textbf{Función Escalón Unitario}
+
+En ingeniería es común encontrar funciones que están ya sea “desactivadas” o “activadas”. Por ejemplo, una fuerza externa que actúa en un sistema mecánico, o un voltaje aplicado a un circuito, se puede desactivar después de cierto tiempo. Es conveniente entonces deﬁnir una función especial que es el número 0 (desactivada) hasta un cierto tiempo t = a y entonces el número 1 (activada) después de ese tiempo. La función se llama función escalón unitario o función de Heaviside
+\\
+
+La \textbf{función escalón unitario} $\mathcal{U}(t-a)$ se define como 
+\\
+
+$\mathcal{U}(t-a) =
+\left\{ \begin{array}{lc}
+             0, &   0 \leq t < a (Desactivada) \\
+             \\1, &  t \geq a (Activada)
+             \end{array}
+\right.
+$
+
+\vspace{0.5cm}
+Observe que se define $\mathcal{U}(t-a)$ sólo en el eje \textit{t} no negativo, puesto que esto es todo lo que interesa en el estudio de la transformada de Laplace. En un sentido más amplio, $\mathcal{U}(t-a) = 0$ para \textit{t<a}.
+\\
+
+La función escalón unitario también se puede usar para escribir funciones deﬁnidas por tramos en una forma compacta.
+
+\vspace{0.5cm}
+$f(x) =
+\left\{ \begin{array}{lc}
+             g(t), &   0 \leq t < a \\
+             \\h(t), &  t \geq a
+             \end{array}
+\right.
+$
+
+\vspace{0.5cm}
+es la misma de \begin{equation}
+f(t)=g(t)-g(t)\mathcal{U}(t-a) + h(t)\mathcal{U}(t-a)
+\end{equation}
+
+\vspace{0.5cm}
+Análogamente, una función del tipo
+
+\vspace{0.5cm}
+
+$f(x) =
+\left\{ \begin{array}{lc}
+             0, &   0 \leq t < a \\
+             \\g(t), &  a \leq t < b \\
+             \\0, & t \geq a
+             \end{array}
+\right.
+$
+
+\vspace{0.5cm}
+puede ser escrita como \begin{equation}
+f(t)=g(t)[\mathcal{U}(t-a)-\mathcal{U}(t-b)]
+\end{equation}
+
+\vspace{0.7cm}
+
+Por consiguiente el segundo teorema de traslación o desplazamiento en su version de transformada directa de define como
+
+si $F(s) = \mathcal{L}{f(t)} y a > 0$, entonces
+
+\begin{equation}
+\mathcal{L}\{f(t-a)\mathcal{U}(t-a)\} = e^{-as} F(s)
+\end{equation}
+
+\vspace{0.5cm}
+
+Si $f(t) = \mathcal{L}^{-1}{F(s)}$, la forma inversa del teorema $a >0$, es
+
+\begin{equation}
+\mathcal{L}^{-1}\{e^{-as}F(s)\} = f(t-a)\mathcal{U}(t-a)
+\end{equation}
+
+\vspace{1cm}
+
+\textbf{Ejemplo}
+
+\begin{itemize}
+\item Encontrar la transformada de Laplace de la función dada\\
+$\mathcal{L} \{e^{2-t}\hspace{0.1cm} \mathcal{U}(t-2)$\}
+\end{itemize}
+
+\textbf{Solución}
+Primeramente hay que asegurar que la función \textit{f(t)} tenga la misma traslación que el escalón \textit{(t-2)}, para eso se factoriza un signo.
+
+\vspace{0.2cm}
+\hspace{0.3cm}$\mathcal{L} \{e^{-(t-2)}\hspace{0.1cm} \mathcal{U}(t-2)$\}
+
+\vspace{0.3cm}
+Definimos el valor de
+
+\hspace{0.3cm}$f(t) = e^{-t}$
+
+Se aplica tablas para conocer la transformada de $ e^{-t} $ sabiendo que \textit{a = -1}
+
+\hspace{0.3cm}$ F(s) = \dfrac{1}{s + 1} $
+
+\vspace{0.2cm}
+Conociendo la ecuación de traslación en el eje t $\mathcal{L}\{f(t-a)\mathcal{U}(t-a)\} = e^{-as} F(s)$, con \textit{a = 2} y $ F(s) = \dfrac{1}{s + 1} $, la transformada de Laplace es
+
+\vspace{0.3cm}
+\hspace{0.3cm}$\mathcal{L} \{e^{2-t}\hspace{0.1cm} \mathcal{U}(t-2)$\} = $ e^{-2s} * \dfrac{1}{s + 1}$
+
+\hspace{0.3cm}$\mathcal{L} = \dfrac{e^{-2s}}{s + 1}$
+
+
+\vspace{0.6cm}
+\subsection{Transformada de una Función Periódica}\textbf{Función Periódica}
+
+Si una función periódica tiene periodo \textit{T, T > 0}, entonces \textit{f(t + T) = f(t)}. El siguiente teorema muestra que la transformada de Laplace de una función periódica se obtiene integrando sobre un periodo.\\
+
+Si $f(x)$ es continua por tramos en [0,$\infty$), de orden exponencial y periódica con periodo T, entonces
+
+\begin{equation}
+\mathcal{L} \textit{f(t)} = \dfrac{1}{1 - e^{-sT}}  \displaystyle\int_{0}^{\infty} \! e^{-sT} f(t)  \,dt
+\end{equation}
+
+\vspace{1cm}
+
+\textbf{Ejemplo}
+
+\begin{itemize}
+\item Encuentre la transformada de Laplace de la función periódica que se muestra en la figura
+\end{itemize}
+
+\definecolor{qqqqff}{rgb}{0,0,1}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
+\begin{axis}[
+x=1cm,y=1cm,
+axis lines=middle,
+ymajorgrids=true,
+xmajorgrids=true,
+xmin=-1.519883994542776,
+xmax=5.479592738124059,
+ymin=-3.03243871906572,
+ymax=4.147669671218335,
+xtick={-1,0,...,5},
+ytick={-3,-2,...,4},]
+\clip(-1.519883994542776,-3.03243871906572) rectangle (5.479592738124059,4.147669671218335);
+\draw[line width=2pt,color=qqqqff] (0,1) -- (0,1);
+\draw[line width=2pt,color=qqqqff] (0,1) -- (0.002503362068763486,1);
+\draw[line width=2pt,color=qqqqff] (0.07750277557072005,1) -- (0.08000275602078527,1);
+\draw[line width=2pt,color=qqqqff] (1.967496780519843,0) -- (1.9699967602538442,0);
+\draw[thick,color=qqqqff] (0,1) -- (1,1);
+\draw[thick,color=qqqqff] (1,0) -- (2,0);
+\begin{scriptsize}
+\draw[color=qqqqff] (0.19611675282070615,1.0035498808187922) node {$E$};
+\draw[color=qqqqff] (1.2008803483164292,-0.03508215048015917) node {$E$};
+\end{scriptsize}
+\end{axis}
+\end{tikzpicture}
+
+\vspace{0.5cm}
+\textbf{Solución}
+La función \textit{E(t)} se llama onda cuadrada y tiene periodo \textit{T = 2} en el intervalo $ 0 \leq t <2 $, $E(t)$ se puede definir por
+
+\vspace{0.3cm}
+$E(t) =
+\left\{ \begin{array}{lc}
+             1, &   0 \leq t < 1 \\
+             \\0, & 1 \leq t < 2
+             \end{array}
+\right.
+$
+
+\vspace{0.5cm}
+y fuera del intervalo por $ f(t 2) = f(t)$. Ahora de la ecuación (6)
+
+\vspace{0.4cm}
+$\mathcal{L}{E(t)} = \dfrac{1}{1 - e^{-2s}}  \displaystyle\int_{0}^{2} \! e^{-sT} f(t)  \,dt$
+
+\vspace{0.6cm}
+
+Se escriben dos integrales ya que la función se encuentra por trozos
+
+\hspace{1.1cm} $= \dfrac{1}{1 -e^{-2s}}[ \displaystyle\int_{0}^{1} \! e^{-sT} 1dt +  \displaystyle\int_{1}^{2} \! e^{-sT} 0dt]$ 
+
+\vspace{0.4cm}
+
+Se anula la segunda integral por que se esta multiplicando por cero
+
+\hspace{1.1cm} $= \dfrac{1}{1 -e^{-2s}}  \displaystyle\int_{0}^{1} \! e^{-sT} dt$
+
+\vspace{0.4cm}
+
+Se multiplica y se divide por el mismo valor para no alterar el resultado
+
+\hspace{1.1cm} $=\dfrac{1}{1 - e^{-2s}} [-\dfrac{1}{s} e^{-sT}]_{0}^{1}$
+
+\vspace{0.4cm}
+
+Se sustituye el limite
+
+\hspace{1.1cm} $=\dfrac{1}{1 - e^{-2s}}*\dfrac{1}{s}(e^{-s} - e^{0})$
+
+\hspace{1.1cm} $=\dfrac{1}{1 - e^{-2s}}\dfrac{1 - e^{-s}}{s}$
+
+\hspace{1.1cm} $= \dfrac{1}{(1-e^{-s})(1+e^{-s})} * (\dfrac{1-e^{-s}}{s•}) $
+
+\vspace{0.5cm}
+Siendo
+
+\vspace{0.4cm}
+$\mathcal{L}{E(t)} = \dfrac{1}{(1+e^{-s})s}$ La transformada de Laplace de esta función continua.
+
+\vspace{0.6cm}
+\section{CONCLUSIÓN}
+
+Se puede establecer que las ecuaciones diferenciales son muy útiles al momento de resolver problemas en diferentes campos profesionales, ayudar en varios zonas poblacionales y en las distintas áreas de trabajo de empresas, es muy importante conocer algunos conceptos previos para poder realizarlas y aun mas, conocer las diferentes propiedades y herramientas que estas poseen para ahorrar tiempo y esfuerzo, en el caso de la transformada de Laplace, es una increíble recurso que uno puede aplicar, según el problema y grado de difultad que éste presente. 
+Gracias a las distintas herramientas tecnológicas aplicadas en el presente ensayo, se pudo evidenciar el incremento en las técnicas de programación y el conocimiento aprendido de los temas tratados.
+
+\vspace{0.5cm}
+\section{BIBLIOGRAFÍA}
+
+Ecuaciones Diferenciales. con aplicaciones de modelado. Dennis G. Zill, Michael R. Cul. novena edición
+\end{document}
